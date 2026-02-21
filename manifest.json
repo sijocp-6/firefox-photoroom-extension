@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "name": "PhotoRoom Background Remover",
+  "version": "1.4",
+  "description": "Remove background from images using PhotoRoom with auto-download. Click toolbar button or right-click any image.",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "<all_urls>",
+    "clipboardWrite",
+    "tabs",
+    "downloads",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.photoroom.com/tools/background-remover*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["image-buttons.js"],
+      "run_at": "document_end",
+      "exclude_matches": ["https://www.photoroom.com/*"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "PhotoRoom: Remove background from page images",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "photoroom-bg-remover@extension.local",
+      "strict_min_version": "91.0"
+    }
+  }
+}
